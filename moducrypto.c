@@ -2230,4 +2230,9 @@ const mp_obj_module_t mp_module_ucrypto = {
 };
 
 // Register the module to make it available in Python
+
+#if defined(CIRCUITPY)
+MP_REGISTER_MODULE(MP_QSTR__crypto, mp_module_ucrypto, 1);
+#else
 MP_REGISTER_MODULE(MP_QSTR__crypto, mp_module_ucrypto);
+#endif

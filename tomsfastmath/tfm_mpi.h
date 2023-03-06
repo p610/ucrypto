@@ -124,8 +124,10 @@
  *
  * You can externally define this or it defaults to 4096-bits [allowing multiplications upto 2048x2048 bits ]
  */
-#ifndef FP_MAX_SIZE
+#if !defined(FP_MAX_SIZE) && defined(DIGIT_BIT)
 #define FP_MAX_SIZE ((2048 * 2) + (8 * DIGIT_BIT))
+#elif !defined(FP_MAX_SIZE)
+#define FP_MAX_SIZE (2048 * 2)
 #endif
 
 /* will this lib work? */
@@ -348,7 +350,7 @@
 
 /* use rng_get() as rand function */
 #if defined(__thumb2__) || defined(__thumb__) || defined(__arm__)
-#if MICROPY_HW_ENABLE_RNG
+#if defined(MICROPY_HW_ENABLE_RNG) && MICROPY_HW_ENABLE_RNG
 #include "rng.h"
 #ifndef FP_GEN_RANDOM
 #define FP_GEN_RANDOM() rng_get()
